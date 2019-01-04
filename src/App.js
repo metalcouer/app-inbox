@@ -1,48 +1,69 @@
 import React, { Component } from 'react';
+import Toolbar from './components/Toolbar.js';
+import MessageList from './components/MessageList.js';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      messages: [1,2,3]
+    }
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:8082/api/messages')
+    .then(function(response){
+      return response.json()
+    })
+    .then(myJson => {
+      this.setState({
+        messages: myJson
+      })
+    });
+  }
+
+  messageRead = (id) => {
+    console.log('messageRead', id)
+    const updateMessages = this.state.messages.map(message => {
+      if (message.id === id) {
+        message.read = !message.read
+      }
+      return message
+    })
+
+
+    this.setState({
+      messages: updateMessages
+    })
+  }
+
+  messageStarred = (props) => {
+    const updateStar = this.state.messages.map(message => {
+      if (message.props === props) {
+        message.star = !message.star
+      }
+      return message 
+    })
+
+    this.setState({
+      messages: updateStar
+    })
+
+  }
+
   render() {
     return (
-      <div class="row toolbar">
-  <div class="col-md-12">
-    <p class="pull-right">
-      <span class="badge badge">2</span>
-      unread messages
-    </p>
-
-    <button class="btn btn-default">
-      <i class="fa fa-check-square-o"></i>
-    </button>
-
-    <button class="btn btn-default">
-      Mark As Read
-    </button>
-
-    <button class="btn btn-default">
-      Mark As Unread
-    </button>
-
-    <select class="form-control label-select">
-      <option>Apply label</option>
-      <option value="dev">dev</option>
-      <option value="personal">personal</option>
-      <option value="gschool">gschool</option>
-    </select>
-
-    <select class="form-control label-select">
-      <option>Remove label</option>
-      <option value="dev">dev</option>
-      <option value="personal">personal</option>
-      <option value="gschool">gschool</option>
-    </select>
-
-    <button class="btn btn-default">
-      <i class="fa fa-trash-o"></i>
-    </button>
-  </div>
-</div>
-    )
+      <div className="app">
+        <Toolbar></Toolbar>
+        <MessageList
+          messages={this.state.messages}
+          messageRead={this.messageRead}
+          messageStarred={this.messageStarred}>
+        </MessageList>
+      </div>
+    );
   }
 }
 
