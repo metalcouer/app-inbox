@@ -12,21 +12,40 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
-    fetch('http://localhost:8082/api/messages')
-    .then(function(response){
-      return response.json()
-    })
-    .then(myJson => {
-      this.setState({
-        messages: myJson
+  async componentDidMount(){
+    let response = await fetch('http://localhost:8082/api/messages')
+    let messages = await response.json()
+    let addSelected = messages.map(message => {
+        if(!message.selected) {
+          message.selected = false
+        
+        } 
+        return message
       })
-    });
+      this.setState({messages: addSelected})
+      return messages
   }
 
-  messageRead = (id) => {
+  messageRead = async (id) => {
     console.log('messageRead', id)
-    const updateMessages = this.state.messages.map(message => {
+
+    let message = {
+      messageIds: [id],
+      command: "read",
+      "read" : true
+    }
+
+     await fetch ('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(message),
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json',
+      }
+    })
+
+
+    const updatedMessages = this.state.messages.map(message => {
       if (message.id === id) {
         message.read = !message.read
       }
@@ -35,7 +54,7 @@ class App extends Component {
 
 
     this.setState({
-      messages: updateMessages
+      messages: updatedMessages
     })
   }
 

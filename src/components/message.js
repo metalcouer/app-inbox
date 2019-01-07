@@ -8,10 +8,15 @@ let Message = (props) =>  {
                 <div className="col-xs-1">
                     <div className="row">
                         <div className="col-xs-2">
-                            <input type="checkbox" />
+                            <input type="checkbox" 
+                                onChange={() => this.props.markAsSelected(this.props.message.id)}
+                                checked={() => this.props.message.selected ? "checked" : ""}
+                            />
                         </div>
                         <div className="col-xs-2">
-                            <i className= {props.message.star ? "star fa fa-star-o" : "star fa fa-star"}onClick={() => props.messageStarred(props.message)}></i>
+                            <i
+                            
+                            className= {props.message.star ? "star fa fa-star-o" : "star fa fa-star"}onClick={() => props.messageStarred(props.message)}></i>
                         </div>
                     </div>
                 </div>
