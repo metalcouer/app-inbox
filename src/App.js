@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      messages: [1,2,3]
+      messages: []
     }
   }
 
@@ -16,74 +16,111 @@ class App extends Component {
     let response = await fetch('http://localhost:8082/api/messages')
     let messages = await response.json()
     let addSelected = messages.map(message => {
-        if(!message.selected) {
+        if(!message.selected) 
           message.selected = false
-        
-        } 
         return message
       })
       this.setState({messages: addSelected})
       return messages
   }
-
-  messageRead = async (id) => {
-    console.log('messageRead', id)
-
-    let message = {
-      messageIds: [id],
-      command: "read",
-      "read" : true
+  update = async (idArr, command, prop, value) => {
+      let message = {
+        "messageIds": idArr,
+        "command": command,
+        [prop] : value
+      }
+      await fetch ('http://localhost:8082/api/messages', {
+        method: 'PATCH',
+        body: JSON.stringify(message),
+        headers: {
+          'Content-Type' : 'application/json',
+          'Accept' : 'application/json'
+        }
+      })
     }
 
-     await fetch ('http://localhost:8082/api/messages', {
-      method: 'PATCH',
-      body: JSON.stringify(message),
-      headers: {
-        'Content-Type' : 'application/json',
-        'Accept' : 'application/json',
-      }
-    })
-
-
+  markAsReadButtonClicked = () => {
+    console.log("markAsReadButtonClicked")
+  }
+  
+  messageSelected = (id) => {
+    console.log("messageSelected", id)
     const updatedMessages = this.state.messages.map(message => {
       if (message.id === id) {
-        message.read = !message.read
+        message.selected =!message.selected;
       }
-      return message
+      return message;
     })
+  
+    this.setState({
+        messages: updatedMessages
+      })
+  }
 
+
+  messageRead = (id) => {
+   
+     const updatedMessages = this.state.messages.map(message => {
+       console.log(message)
+      if (message.id === id) 
+        message.read = !message.read;
+      
+      return message;
+    })
 
     this.setState({
       messages: updatedMessages
-    })
+    }) 
+    this.update(id, "read", "read", true )
   }
 
-  messageStarred = (props) => {
-    const updateStar = this.state.messages.map(message => {
-      if (message.props === props) {
-        message.star = !message.star
-      }
-      return message 
-    })
+    
+    
+  
 
-    this.setState({
-      messages: updateStar
-    })
 
-  }
+  
+
+      
+    
+  // }
+    
+ 
+
+  // messageStarred = (props) => {
+  //   const updateStar = this.state.messages.map(message => {
+  //     if (message.props === props) {
+  //       message.star = !message.star
+  //     }
+  //     return message 
+  //   })
+
+    //  star =(id) => {
+    //   this.update([id], "star", "starred")
+    // }
+
+    // this.setState({
+    //   messages: updateStar
+    // })
+
+  
 
   render() {
     return (
-      <div className="app">
-        <Toolbar></Toolbar>
+      <div className="App">
+        <Toolbar markAsReadButtonClicked={this.markAsReadButtonClicked}></Toolbar>
         <MessageList
           messages={this.state.messages}
           messageRead={this.messageRead}
-          messageStarred={this.messageStarred}>
+          messageSelected={this.messageSelected}>
         </MessageList>
       </div>
     );
+  
   }
 }
+
+  
+
 
 export default App;

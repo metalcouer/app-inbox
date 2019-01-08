@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../App.css';
 
 let Message = (props) =>  {
     return (
         <div clasName="messageList">
-            <div className={props.message.read ? "row message read" : "row message unread" }onClick={() => props.messageRead(props.message.id)}>
+            <div className={props.message.read ? "row message read" : "row message unread"} onClick={() => props.messageRead(props.message.id)} >
                 <div className="col-xs-1">
                     <div className="row">
                         <div className="col-xs-2">
-                            <input type="checkbox" 
-                                onChange={() => this.props.markAsSelected(this.props.message.id)}
-                                checked={() => this.props.message.selected ? "checked" : ""}
+                            <input type="checkbox" onClick ={() => props.messageSelected(props.message.id)} checked={(typeof props.message.selected !== "undefined") && props.message.selected === true ? "checked" : ""}
+
                             />
                         </div>
                         <div className="col-xs-2">
