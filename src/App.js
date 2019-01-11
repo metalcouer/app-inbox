@@ -46,17 +46,29 @@ class App extends Component {
     }
 
   markAsReadButtonClicked = () => {
-    console.log("markAsReadButtonClicked")
+
 
     const selectedMessages = this.state.messages.filter(message =>  message.selected === true)
-    console.log("selectedMessages", selectedMessages)
+    
     selectedMessages.forEach( message => this.messageRead(message.id))
   }
-  
+
+  unReadButtonClicked = () => {
+
+    const selectedMessages = this.state.messages.map(message => {
+      if(message.selected === true){
+        message.read = false
+      }
+      return message
+    })
+    
+    this.setState({
+     message:selectedMessages
+  })
+}
+
   messageSelected = (id) => {
-    console.log("messageSelected", id)
-
-
+    
     const updatedMessages = this.state.messages.map(message => {
       if (message.id === id) {
         message.selected =!message.selected;
@@ -130,7 +142,8 @@ class App extends Component {
         messageRead={this.messageRead}
         messageSelected={this.messageSelected}
         messageStarred={this.messageStarred}
-        selectAll={this.selectAll}>
+        selectAll={this.selectAll}
+        unReadButtonClicked={this.unReadButtonClicked}>
         </Toolbar>
         <MessageList
           messages={this.state.messages}
