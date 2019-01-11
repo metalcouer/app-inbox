@@ -53,7 +53,7 @@ class App extends Component {
     selectedMessages.forEach( message => this.messageRead(message.id))
   }
   
-  messageSelected = async (id) => {
+  messageSelected = (id) => {
     console.log("messageSelected", id)
 
 
@@ -70,6 +70,21 @@ class App extends Component {
       this.update([id],"selected", "selected", true)
   }
 
+  selectAll = (id) => {
+    
+    const numOfSelected =  this.state.messages.filter(message => message.selected === true)
+    const allMessages = this.state.messages.map(message => {
+      numOfSelected.length === this.state.messages.length
+      ?message.selected = false
+      :message.selected = true
+      return message;
+    })
+    this.setState({
+      messages: allMessages
+    })
+   
+  }
+ 
 
   messageRead = (id) => {
    
@@ -114,7 +129,8 @@ class App extends Component {
         messages={this.state.messages}
         messageRead={this.messageRead}
         messageSelected={this.messageSelected}
-        messageStarred={this.messageStarred}>
+        messageStarred={this.messageStarred}
+        selectAll={this.selectAll}>
         </Toolbar>
         <MessageList
           messages={this.state.messages}

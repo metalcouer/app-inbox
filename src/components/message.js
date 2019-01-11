@@ -3,12 +3,12 @@ import '../App.css';
 
 let Message = (props) =>  {
     return (
-        <div clasName="messageList">
+        <div className="messageList">
             <div className={`row message ${props.message.read ? 'read' : 'unread'} ${props.message.selected ? 'selected' : ''}`} >
                 <div className="col-xs-1">
                     <div className="row">
                         <div className="col-xs-2">
-                            <input type="checkbox" onClick ={() => props.messageSelected(props.message.id)} checked={(typeof props.message.selected !== "undefined") && props.message.selected === true ? "checked" : ""}
+                            <input type="checkbox" onChange ={() => props.messageSelected(props.message.id)} checked={(typeof props.message.selected !== "undefined") && props.message.selected === true ? "checked" : ""}
 
                             />
                         </div>

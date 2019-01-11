@@ -11,14 +11,14 @@ const Toolbar = (props) => {
                     unread messages
                 </p>
             
-                <button className="btn btn-default">
+                <button className="btn btn-default" onClick={props.selectAll}>
                     <i className={props.numOfSelected === props.messages.length
                     ? "fa fa-check-square-o" 
                     : props.numOfSelected === 0 
                       ? "fa fa-minus-o"
                       :"fa fa-minus-square-o"
                     }
-                    onClick={() => props.messageSelected(props.message.id)}></i>
+                   ></i>
                 </button>
             
                 <button onClick={props.markAsReadButtonClicked} className="btn btn-default">
