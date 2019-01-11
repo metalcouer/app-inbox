@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import '../App.css';
 
 const Toolbar = (props) => {
+
+    const messageCount = props.messages.filter(message => !message.read).length
+
+
     return (
         <div className='toolbar'>
                 <div className="row toolbar">
                 <div className="col-md-12">
                 <p className="pull-right">
-                    <span className="badge badge">2</span>
+                    <span const className="badge badge">{messageCount}</span>
                     unread messages
                 </p>
             
