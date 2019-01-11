@@ -4,7 +4,7 @@ import '../App.css';
 let Message = (props) =>  {
     return (
         <div clasName="messageList">
-            <div className={`row message ${props.message.read ? 'read' : 'unread'} ${props.message.selected ? 'selected' : ''}`} onClick={() => props.messageRead(props.message.id)} >
+            <div className={`row message ${props.message.read ? 'read' : 'unread'} ${props.message.selected ? 'selected' : ''}`} >
                 <div className="col-xs-1">
                     <div className="row">
                         <div className="col-xs-2">
@@ -15,11 +15,11 @@ let Message = (props) =>  {
                         <div className="col-xs-2">
                             <i
                             
-                            className= {props.message.star ? "star fa fa-star-o" : "star fa fa-star"}onClick={() => props.messageStarred(props.message)}></i>
+                            className= {props.starred ? "star fa fa-star-o" : "star fa fa-star"} onClick={() => props.messageStarred(props.message.id)}></i>
                         </div>
                     </div>
                 </div>
-                <div className="col-xs-11">
+                <div className="col-xs-11" onClick={() => props.messageRead(props.message.id)}>
                     <a href="#">
                         {props.message.subject}
                     </a>

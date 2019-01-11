@@ -26,8 +26,8 @@ class App extends Component {
   }
   update = async (idArr, command, prop, value) => {
       let message = {
-        "messageIds": idArr,
-        "command": command,
+        messageIds: idArr,
+        command: command,
         [prop] : value
         // "messageIds": [1],
         // "command": "read",
@@ -88,30 +88,39 @@ class App extends Component {
     this.update([id], "read", "read", true )
   }
 
-  // messageStarred = (props) => {
-  //   const updateStar = this.state.messages.map(message => {
-  //     if (message.props === props) {
-  //       message.star = !message.star
-  //     }
-  //     return message 
-  //   })
+  messageStarred = (id) => {
+    const updateStar = this.state.messages.map(message => {
+      if (message.id === id) 
+        message.starred = !message.starred
+      
+      return message 
+    })
 
-  //   star =(id) => {
-  //     this.update([id], "star", "starred")
-  //   }
 
-  //   this.setState({
-  //     messages: updateStar
-  //   })
-  // }
+    this.setState({
+      messages: updateStar
+    })
+  }
+
+
   render() {
+    const numOfSelected = this.state.messages.filter(message => message.selected === true).length
+
     return (
       <div className="App">
-        <Toolbar markAsReadButtonClicked={this.markAsReadButtonClicked}></Toolbar>
+        <Toolbar 
+        markAsReadButtonClicked={this.markAsReadButtonClicked}
+        numOfSelected={numOfSelected}
+        messages={this.state.messages}
+        messageRead={this.messageRead}
+        messageSelected={this.messageSelected}
+        messageStarred={this.messageStarred}>
+        </Toolbar>
         <MessageList
           messages={this.state.messages}
           messageRead={this.messageRead}
-          messageSelected={this.messageSelected}>
+          messageSelected={this.messageSelected}
+          messageStarred={this.messageStarred}>
         </MessageList>
       </div>
     );

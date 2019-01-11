@@ -8,7 +8,14 @@ const MessageList = (props) => {
                 return <Message 
                 message={message} 
                 messageRead={props.messageRead} 
-                messageSelected={props.messageSelected}>
+                messageSelected={props.messageSelected}
+                messageStarred={props.messageStarred}
+                starred={message.starred}
+                subject={message.subject}
+                labels={message.labels}
+                body={message.body}
+                read={message.read}
+                key={message.id}>
                 </Message>
             })
             

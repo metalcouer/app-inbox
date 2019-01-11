@@ -12,7 +12,13 @@ const Toolbar = (props) => {
                 </p>
             
                 <button className="btn btn-default">
-                    <i className={false ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>
+                    <i className={props.numOfSelected === props.messages.length
+                    ? "fa fa-check-square-o" 
+                    : props.numOfSelected === 0 
+                      ? "fa fa-minus-o"
+                      :"fa fa-minus-square-o"
+                    }
+                    onClick={() => props.messageSelected(props.message.id)}></i>
                 </button>
             
                 <button onClick={props.markAsReadButtonClicked} className="btn btn-default">
