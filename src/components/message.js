@@ -4,7 +4,7 @@ import '../App.css';
 let Message = (props) =>  {
     return (
         <div clasName="messageList">
-            <div className={props.message.read ? "row message read" : "row message unread"} onClick={() => props.messageRead(props.message.id)} >
+            <div className={`row message ${props.message.read ? 'read' : 'unread'} ${props.message.selected ? 'selected' : ''}`} onClick={() => props.messageRead(props.message.id)} >
                 <div className="col-xs-1">
                     <div className="row">
                         <div className="col-xs-2">

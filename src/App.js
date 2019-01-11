@@ -8,7 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      messages: []
+      messages: [],
+      // allSelected: true
     }
   }
 
@@ -28,6 +29,9 @@ class App extends Component {
         "messageIds": idArr,
         "command": command,
         [prop] : value
+        // "messageIds": [1],
+        // "command": "read",
+        // "read" : false
       }
       await fetch ('http://localhost:8082/api/messages', {
         method: 'PATCH',
@@ -37,14 +41,22 @@ class App extends Component {
           'Accept' : 'application/json'
         }
       })
+      .catch( error => console.error(error))
+    
     }
 
   markAsReadButtonClicked = () => {
     console.log("markAsReadButtonClicked")
+
+    const selectedMessages = this.state.messages.filter(message =>  message.selected === true)
+    console.log("selectedMessages", selectedMessages)
+    selectedMessages.forEach( message => this.messageRead(message.id))
   }
   
-  messageSelected = (id) => {
+  messageSelected = async (id) => {
     console.log("messageSelected", id)
+
+
     const updatedMessages = this.state.messages.map(message => {
       if (message.id === id) {
         message.selected =!message.selected;
@@ -55,6 +67,7 @@ class App extends Component {
     this.setState({
         messages: updatedMessages
       })
+      this.update([id],"selected", "selected", true)
   }
 
 
@@ -63,7 +76,8 @@ class App extends Component {
      const updatedMessages = this.state.messages.map(message => {
        console.log(message)
       if (message.id === id) 
-        message.read = !message.read;
+        message.read = true;
+        
       
       return message;
     })
@@ -71,21 +85,8 @@ class App extends Component {
     this.setState({
       messages: updatedMessages
     }) 
-    this.update(id, "read", "read", true )
+    this.update([id], "read", "read", true )
   }
-
-    
-    
-  
-
-
-  
-
-      
-    
-  // }
-    
- 
 
   // messageStarred = (props) => {
   //   const updateStar = this.state.messages.map(message => {
@@ -95,16 +96,14 @@ class App extends Component {
   //     return message 
   //   })
 
-    //  star =(id) => {
-    //   this.update([id], "star", "starred")
-    // }
+  //   star =(id) => {
+  //     this.update([id], "star", "starred")
+  //   }
 
-    // this.setState({
-    //   messages: updateStar
-    // })
-
-  
-
+  //   this.setState({
+  //     messages: updateStar
+  //   })
+  // }
   render() {
     return (
       <div className="App">
