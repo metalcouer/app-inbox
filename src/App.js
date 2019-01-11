@@ -64,8 +64,15 @@ class App extends Component {
     
     this.setState({
      message:selectedMessages
-  })
-}
+    })
+   }
+
+  deleteButton = () => {
+    const notSelected = this.state.messages.filter(message => !message.selected === true)
+    console.log("not", notSelected)
+    this.setState({ messages: notSelected})
+  }
+  
 
   messageSelected = (id) => {
     
@@ -143,7 +150,8 @@ class App extends Component {
         messageSelected={this.messageSelected}
         messageStarred={this.messageStarred}
         selectAll={this.selectAll}
-        unReadButtonClicked={this.unReadButtonClicked}>
+        unReadButtonClicked={this.unReadButtonClicked}
+        deleteButton={this.deleteButton}>
         </Toolbar>
         <MessageList
           messages={this.state.messages}
