@@ -33,7 +33,7 @@ const Toolbar = (props) => {
                     Mark As Unread
                 </button>
             
-                <select className="form-control label-select">
+                <select onChange={(event) => props.applyLabel(event)}className="form-control label-select">
                     <option>Apply label</option>
                     <option value="dev">dev</option>
                     <option value="personal">personal</option>

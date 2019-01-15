@@ -74,6 +74,21 @@ class App extends Component {
   }
   
 
+  applyLabel = async (event) => {
+    event.preventDefault()
+   
+    const labelsSelected = this.state.messages.map(message => {
+      if (message.selected === true && !message.labels.includes(event.target.value)){
+
+        message.labels.push(event.target.value)
+
+       
+      }
+      return message
+    })
+    this.setState({messages: labelsSelected})
+  }
+
   messageSelected = (id) => {
     
     const updatedMessages = this.state.messages.map(message => {
@@ -134,8 +149,12 @@ class App extends Component {
     this.setState({
       messages: updateStar
     })
-  }
 
+  }
+ 
+
+  
+  
 
   render() {
     const numOfSelected = this.state.messages.filter(message => message.selected === true).length
@@ -149,6 +168,7 @@ class App extends Component {
         messageRead={this.messageRead}
         messageSelected={this.messageSelected}
         messageStarred={this.messageStarred}
+        applyLabel={this.applyLabel}
         selectAll={this.selectAll}
         unReadButtonClicked={this.unReadButtonClicked}
         deleteButton={this.deleteButton}>
