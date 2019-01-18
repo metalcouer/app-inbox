@@ -89,6 +89,22 @@ class App extends Component {
     this.setState({messages: labelsSelected})
   }
 
+
+  removeLabel = async (event) => {
+    event.preventDefault()
+   
+    const labelsSelected = this.state.messages.map(message => {
+      if (message.selected === true && message.labels.includes(event.target.value)){
+        let index = message.labels.indexOf(event.target.value)
+        message.labels.splice(index, 1)
+
+       
+      }
+      return message
+    })
+    this.setState({messages: labelsSelected})
+  }
+
   messageSelected = (id) => {
     
     const updatedMessages = this.state.messages.map(message => {
@@ -169,6 +185,7 @@ class App extends Component {
         messageSelected={this.messageSelected}
         messageStarred={this.messageStarred}
         applyLabel={this.applyLabel}
+        removeLabel={this.removeLabel}
         selectAll={this.selectAll}
         unReadButtonClicked={this.unReadButtonClicked}
         deleteButton={this.deleteButton}>

@@ -40,7 +40,7 @@ const Toolbar = (props) => {
                     <option value="gschool">gschool</option>
                 </select>
             
-                <select className="form-control label-select">
+                <select onChange={(event) => props.removeLabel(event)}className="form-control label-select">
                     <option>Remove label</option>
                     <option value="dev">dev</option>
                     <option value="personal">personal</option>
