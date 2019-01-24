@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../App.css';
 
 const Toolbar = (props) => {
@@ -14,7 +14,9 @@ const Toolbar = (props) => {
                     <span const className="badge badge">{messageCount}</span>
                     unread messages
                 </p>
-            
+                <a class="btn btn-danger" onClick={props.createMessage}>
+                <i class="fa fa-plus"></i>
+                </a>
                 <button className="btn btn-default" onClick={props.selectAll}>
                     <i className={props.numOfSelected === props.messages.length
                     ? "fa fa-check-square-o" 

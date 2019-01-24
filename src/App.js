@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Toolbar from './components/Toolbar.js';
 import MessageList from './components/MessageList.js';
+import CreateMessage from './components/createMessage.js';
 import './App.css';
 
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
     super(props)
     this.state = {
       messages: [],
+      toggle: false,
       // allSelected: true
     }
   }
@@ -167,6 +169,12 @@ class App extends Component {
     })
 
   }
+
+  createMessage =(e) => {
+    this.setState ({
+      toggle: !this.state.toggle
+    })
+  }
  
 
   
@@ -188,8 +196,11 @@ class App extends Component {
         removeLabel={this.removeLabel}
         selectAll={this.selectAll}
         unReadButtonClicked={this.unReadButtonClicked}
-        deleteButton={this.deleteButton}>
+        deleteButton={this.deleteButton}
+        createMessage={this.createMessage}>
         </Toolbar>
+        <div>{this.state.toggle ? <CreateMessage></CreateMessage> : ""}</div>
+        
         <MessageList
           messages={this.state.messages}
           messageRead={this.messageRead}
